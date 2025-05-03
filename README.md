@@ -1,4 +1,4 @@
-# 🌞 Reactive Monitoring and Control System Software
+#  Reactive Monitoring and Control System Software
 
 This software is designed for use with the **Active Portable Solar Crop Dryer** and the control system detailed in the *Reactive Monitoring and Control System Technical Manual*.
 
@@ -39,7 +39,7 @@ Make sure the Raspberry Pi Pico board package is installed in your Arduino IDE.
 
 ---
 
-## 🚀 How to Run
+##  How to Run
 
 1. Plug your computer into the **Raspberry Pi Pico** using a USB cable  
 2. Open the code in Arduino IDE  
@@ -48,7 +48,7 @@ Make sure the Raspberry Pi Pico board package is installed in your Arduino IDE.
 
 ---
 
-## 📁 File Structure
+##  File Structure
 
 Each module contains a `.h` and a `.cpp` file with the same name (except for the main file):
 
@@ -63,19 +63,6 @@ Each module contains a `.h` and a `.cpp` file with the same name (except for the
 | `SD_Card`                | Manages CSV data logging on the SD card |
 | `LCD`                    | Manages data display on the TFT screen |
 | `ReactiveControlTeamCode2` | Main file that brings everything together |
-
----
-
-## 💡 Usage Examples *(To Be Added)*
-
-> Here’s where you can show example outputs or screenshots. Things you might want to include:
-> 
-> - Sample output from the CSV log  
-> - Photos of the TFT screen during operation  
-> - Code snippets showing how the fan/servo responds to sensor inputs  
-> - Diagram of the sensor/control wiring setup  
-> 
-> 📌 *Let me know if you'd like help formatting any of this when you're ready to add it!*
 
 ---
 
