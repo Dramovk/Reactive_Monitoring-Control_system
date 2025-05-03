@@ -12,7 +12,7 @@ File datalog_file;
 char date[11];
 char filename[15];
 
-//Variables to hodl the value of the month day and year to be used in setting the date for the title of the CSV file.
+//Variables to hold the value of the month day and year to be used in setting the date for the title of the CSV file.
 int yearI=0;
 int monthI=1;
 int dayI=2;
@@ -57,7 +57,7 @@ void SD_setup(){
     datalog_file.print(", ");
     datalog_file.print("Vent openening Percentage (0-50):");
     datalog_file.print(", ");
-    datalog_file.print("Internal Target Temperature: ");
+    datalog_file.print("Current Internal EMC: ");
     datalog_file.println(" ");
   //Closing the file
   datalog_file.close();
@@ -81,7 +81,7 @@ void setMinute(int Input_minute){
 }
 
 //A function that creates a file labeled the current date and stores all relavent data in it.
-void data_Log(float E_humidity, float E_temperature, float I_humidity, float I_temperature, float irradiance, int fan_Speed, int servo_Value, float internal_TargetTemp){
+void data_Log(float E_humidity, float E_temperature, float I_humidity, float I_temperature, float irradiance, int fan_Speed, int servo_Value, float internal_EMC){
   //Combining the current month day and year into a variable in the correct format MM.DD.YYYY adding zeros as necessary
   sprintf(date, "%02d.%02d.%04d", month(), day(), year());
   //Combing that date format with .csv at the end to create the file name and a csv file.
@@ -93,7 +93,7 @@ void data_Log(float E_humidity, float E_temperature, float I_humidity, float I_t
   //If the file opens
   if(datalog_file){
     //Printing the time stamp in the file
-    datalog_file.print("Current date2: ");
+    datalog_file.print("Current date: ");
     datalog_file.print(month());
     datalog_file.print("/");
     datalog_file.print(day());
@@ -122,7 +122,7 @@ void data_Log(float E_humidity, float E_temperature, float I_humidity, float I_t
     datalog_file.print(", ");
     datalog_file.print(servo_Value);
     datalog_file.print(", ");
-    datalog_file.print(internal_TargetTemp);
+    datalog_file.print(internal_EMC);
     datalog_file.println(" ");
   }
    else{

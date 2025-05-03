@@ -10,6 +10,8 @@ TFT_eSPI tft = TFT_eSPI();
 
 // Variables to display on the LCD
 float fanSpeed = 1200;       // Example fan speed (RPM)
+int fanSpeedPrintValue=0; //Value printed to LCD
+int servoPrintValue=0; //Value printed to LCD
 float servoAngle = 45;       // Example servo angle (degrees)
 float Extemp = 25;             // Example temperature (Farenheight)
 float ExRH = 60;               // Example relative humidity (%)
@@ -191,13 +193,15 @@ void displayVariables(float speed, float angle, float exTemp, float inTemp, floa
   // Left column
   tft.setCursor(x, y);
   tft.print("Fan Speed : ");
-  tft.print(fanSpeed);
+  fanSpeedPrintValue = map(fanSpeed, 75, 100, 0, 100); //CHECK TO SEE IF RIGHT
+  tft.print(fanSpeedPrintValue);
   tft.println(" RPM");
 
   y += spacing;
   tft.setCursor(x, y);
   tft.print("Outlet Open: ");
-  tft.print(servoAngle);
+  servoPrintValue = map(servoAngle, 0, 255, 0, 100);// CHECK TO SEE IF RIGHT
+  tft.print(servoPrintValue);
   tft.println(" %");
 
   y += spacing;

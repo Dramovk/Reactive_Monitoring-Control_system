@@ -8,6 +8,8 @@
 #include "Irradiance_Sensor.h"
 #include "LCD.h"
 #include "Reactative_Algorithim.h"
+#include "Digital_Potentiometer.h"
+
 //Test
 //ALL COMBINED CODE FOR TH SOLAR CROP DRYER
 
@@ -48,8 +50,8 @@ LCD SCREEN PINS:
 #define BUTTON_PIN  21
 
 //Variables to hold the temperature and humidity etc
-float irradiance_value = 0, external_Temp=7, external_Humidity=8, internal_Temp=9, internal_Humidity=10, internal_TargetTemp=0;
-int fan_Speed= 50, outlet_Opening=20;
+float irradiance_value = 0, external_Temp=7, external_Humidity=8, internal_Temp=9, internal_Humidity=10, internal_TargetTemp=0, internal_EMC=0;
+int fan_Speed= 83, outlet_Opening=20;
 int timer =0; // central "clock" in which we determine how often events happen
 int state = -6; // determines which "state" or mode we are in, determines which "window" is displayed on the LCD
 
@@ -113,22 +115,26 @@ void setup() {
   LCDStart();
   //*******************************************
   //Setting up the fan speed function
-  Fan_setup();
+  digital_Potentiometer_Setup();
+  //Initalizing fan speed to 0
+  set_Motor_Speed(70);
+  //
   //*******************************************
   pinMode(BUTTON_PIN, INPUT_PULLDOWN);
   attachInterrupt(BUTTON_PIN, isr, FALLING); // creates interrupt
+
 }
 
 void autonomusly_Set_Actuators(int fan, int outlet){ // this sets the actuators to whatever values we want.
   //Changing the fan speed and Outlet size based on values passed in
-  autonomus_fan_control(fan);
+  set_Motor_Speed(fan);
   autonomus_servo_control(outlet);
 }
 
 void logData()
 {
   //*********Updating the SD Card with the data*************
-  data_Log(external_Humidity, external_Temp, internal_Humidity, internal_Temp, irradiance_value, fan_Speed, outlet_Opening, internal_TargetTemp);
+  data_Log(external_Humidity, external_Temp, internal_Humidity, internal_Temp, irradiance_value, fan_Speed, outlet_Opening, internal_EMC);
 }
 
 void update_LCD_Variables(){ // gathers and logs and updates LCD with data
@@ -190,8 +196,7 @@ void loop() {
       // this is the set year 
       //Reading the potentiometer value from potentiometer 1
       read_Potentiometer_1(potentiometer_variable);
-      interem_value = map(potentiometer_variable,20,4050,2025,2030);
-      year_value=interem_value;
+      year_value = map(potentiometer_variable,0,4050,2025,2030);
       if(interval)
       { 
         Intro_Set(1, year_value, month_value, day_value, hour_value, minute_value);// sets GUI page
@@ -205,8 +210,7 @@ void loop() {
       // this is the set month
       // the potentiometer value from potentiometer 1
       read_Potentiometer_1(potentiometer_variable);
-      interem_value = map(potentiometer_variable,20,4050,1,12);
-      month_value=interem_value;
+      month_value = map(potentiometer_variable,0,4050,1,12);
       if(interval)
       {
         Intro_Set(2, year_value, month_value, day_value, hour_value, minute_value); // sets GUI page
@@ -219,8 +223,7 @@ void loop() {
       // this is the set day
       // the potentiometer value from potentiometer 1
       read_Potentiometer_1(potentiometer_variable);
-      interem_value = map(potentiometer_variable,20,4050,1,31);
-      day_value=interem_value;
+      day_value = map(potentiometer_variable,20,4050,1,31);
       if(interval)
       {
         Intro_Set(3, year_value, month_value, day_value, hour_value, minute_value); // sets GUI page
@@ -233,8 +236,7 @@ void loop() {
       // this is the set hour
       // the potentiometer value from potentiometer 1
       read_Potentiometer_1(potentiometer_variable);
-      interem_value = map(potentiometer_variable,20,4050,0,23);
-      hour_value=interem_value;
+      hour_value = map(potentiometer_variable,20,4050,0,23);
       if(interval)
       {
         Intro_Set(4, year_value, month_value, day_value, hour_value, minute_value); // sets GUI page
@@ -247,8 +249,7 @@ void loop() {
       // this is the set minute
       // the potentiometer value from potentiometer 1
       read_Potentiometer_1(potentiometer_variable);
-      interem_value = map(potentiometer_variable,20,4050,0,59);
-      minute_value=interem_value;
+      minute_value = map(potentiometer_variable,20,4050,0,59);
       if(interval)
       {
         Intro_Set(5, year_value, month_value, day_value, hour_value, minute_value); // sets GUI page
@@ -263,15 +264,15 @@ void loop() {
       //Starting the SD card after date has been set by user
       SD_setup();
       //*******************************************
-      state=0;
+      state=0; // progressign the state to the next one
       break;
     }
     case 0:
     {
+      //Commented out EMC Reactive algorithim call
+      Reactive_EMC_Algorithim(internal_Temp, internal_Humidity, fan_Speed, internal_EMC);
       if(interval)
       {
-        calculate_Target_Temp(internal_TargetTemp, internal_Humidity);// calculating the internal target temperature
-        reactive_Algorithim(fan_Speed, outlet_Opening, external_Temp, external_Humidity, internal_Temp, internal_Humidity, internal_TargetTemp);//calling the reactive algorithm based on variables and target temperature
         logData(); // logs datg 
         Serial.println("in auto");
         automaticGUI(); // runs the automaticGI window
@@ -314,7 +315,12 @@ void loop() {
     }
   }
 }
+
+
+
 /* OLD TEST CODE:*/
+//calculate_Target_Temp(internal_TargetTemp, internal_Humidity);// calculating the internal target temperature
+//reactive_Algorithim(fan_Speed, outlet_Opening, external_Temp, external_Humidity, internal_Temp, internal_Humidity, internal_TargetTemp);//calling the reactive algorithm based on variables and target temperature
 /*// automatic - do all automatic stuff
       //Serial.println("Automatic");
       if(interval){ // 1 second interval

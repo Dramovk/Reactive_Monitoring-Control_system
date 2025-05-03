@@ -38,7 +38,7 @@ void manual_servo_control(int servo_control_pin){
     prev_servo_Voltage=read_Voltage_Value;
     //Serial.println(read_Voltage_Value);
     //mapping the voltage to an open percentage of the servo
-    int open_percentage = map(read_Voltage_Value, 35, 975, 0, 100);
+    int open_percentage = map(read_Voltage_Value, 20, 4050, 0, 100);
     //Serial.println(open_percentage);
     //Movng the servo in the same way as above but from the analog read out of the potentiometer.
     int angle=open_percentage*10+1100;

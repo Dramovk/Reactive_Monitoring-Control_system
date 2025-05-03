@@ -7,7 +7,7 @@
 #define Fan_CONTROL_PIN -1
 
 //Defining the fan pin to contol the speed of the fan.
-#define FAN_PIN 13
+#define FAN_PIN -1
 
 //A fuinction to set up the fan
 void Fan_setup();
