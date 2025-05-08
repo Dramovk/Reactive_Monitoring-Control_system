@@ -11,6 +11,6 @@ void setup_Internal_DHT22();
 
 //The data reading function that takes in references to two variables and 
 //assign's it the value of temperature and humidity from the DHT22
-void temp_and_humidity_Internal_read_DHT22(float &humi, float &tempF);
+void temp_and_humidity_Internal_read_DHT22(float &humi, float &tempF, bool farenheight);
 
 #endif

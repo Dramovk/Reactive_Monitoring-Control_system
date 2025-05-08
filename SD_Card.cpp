@@ -20,10 +20,10 @@ int hourI=3;
 int minuteI=4;
 
 //Setting up the SD card Module
-void SD_setup(){
+void SD_setup(bool fahrenheit){
   //Setting the current date and time
-  //      Hour  Minute second month, day, year
-  setTime(hourI, minuteI, 0, monthI, dayI, yearI); 
+  //      Hour, Minute, second, day, month,  year
+  setTime(hourI, minuteI, 0, dayI, monthI, yearI); 
   //Serial.print()
   //Ensuring that the chip select pin intializes.
   //*****NOTICE IF THERE IS NO SD CARD THE ENTIRE PROGRAM WILL NOT RUN
@@ -43,21 +43,33 @@ void SD_setup(){
     datalog_file.print("Date and Time: ");
     datalog_file.print(", ");
     //PRinting all the relevant variables into the file all seperated by a comma to create a propper CSV file.
-    datalog_file.print("External Humidity: ");
+    datalog_file.print("External Relative Humidity(%): ");
     datalog_file.print(", ");
-    datalog_file.print("External Temperature: ");
+    datalog_file.print("External Temperature ");
+    if(fahrenheit){
+      datalog_file.print("(F): ");
+    }
+    else{
+      datalog_file.print("(C): ");
+    }
     datalog_file.print(", ");
-    datalog_file.print("Internal Humidity: ");
+    datalog_file.print("Internal Relative Humidity (%): ");
     datalog_file.print(", ");
-    datalog_file.print("Internal Temperature: ");
+    datalog_file.print("Internal Temperature ");
+    if(fahrenheit){
+      datalog_file.print("(F): ");
+    }
+    else{
+      datalog_file.print("(C): ");
+    }
     datalog_file.print(", ");
-    datalog_file.print("Solar Irradiance Value");
+    datalog_file.print("Solar Irradiance Value (W/m^2): ");
     datalog_file.print(", ");
-    datalog_file.print("Fan Speed percentage (0 - 100): ");
+    datalog_file.print("Fan Speed percentage (0-100%): ");
     datalog_file.print(", ");
-    datalog_file.print("Vent openening Percentage (0-50):");
+    datalog_file.print("Vent openening Percentage (0-100%):");
     datalog_file.print(", ");
-    datalog_file.print("Current Internal EMC: ");
+    datalog_file.print("Current Internal EMC (%): ");
     datalog_file.println(" ");
   //Closing the file
   datalog_file.close();

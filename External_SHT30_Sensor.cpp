@@ -58,7 +58,7 @@ void setup_External_SHT30() {
 }
 
 //A function to read and update the values of the humidity and temperature from the SHT30
-void temp_and_humidity_External_read30(float &aHumidity, float &aTemperature){
+void temp_and_humidity_External_read30(float &aHumidity, float &aTemperature, bool farenheight){
   //Reading the temperature and humidity from the sensor while checking to see if there was an error
   error = External_sensor.blockingReadMeasurement(aTemperature, aHumidity);
   //Checking to see if there where any errors during the reading of the sensor. 
@@ -70,6 +70,9 @@ void temp_and_humidity_External_read30(float &aHumidity, float &aTemperature){
     return;
   }
   //Changing the temperature from celcuis to farenheight.
-  //IF NEED TEMPERATURE IN CELCIUS COMMENT OUT THE LINE BELOW
-  aTemperature= aTemperature * 9/5+32;
+  //converting to farenheight if true
+  if(farenheight){
+    aTemperature= aTemperature * 9/5+32;
+  }
+
 }

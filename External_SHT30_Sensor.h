@@ -13,7 +13,7 @@
 void setup_External_SHT30();
 
 //A function that reads and assigns the temperature and humidity values from the SHT30 sensor to two variables
-void temp_and_humidity_External_read30(float &aHumidity, float &aTemperature);
+void temp_and_humidity_External_read30(float &aHumidity, float &aTemperature, bool farenheight);
 
 
 #endif

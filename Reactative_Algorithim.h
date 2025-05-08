@@ -9,10 +9,6 @@
 void calculate_EMC(float tempF, float RH, float &returnEMC);
 
 //Function to check the EMC based on temperature and Humidity
-void Reactive_EMC_Algorithim(float temperatureF, float humidityRH, int & fan_speed, float &returnCurrentEMC);
-
-//Function to run the reactive algorithm
-//void reactive_Algorithim(int &fan_Speed, int &outlet_Opening, float external_Temp, float external_Humidity, float internal_Temp, float internal_Humidity, float target_temp);
-
+void Reactive_EMC_Algorithim(float temperatureF, float humidityRH, int & fan_speed, float &returnCurrentEMC, int EMC_interval);
 
 #endif

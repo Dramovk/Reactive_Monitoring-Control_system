@@ -13,16 +13,21 @@ void setup_Internal_DHT22(){
 }
 
 //A function to get the temperature and humidity data from the dht22 Sensor
-void temp_and_humidity_Internal_read_DHT22(float &humi, float &tempF){
+void temp_and_humidity_Internal_read_DHT22(float &humi, float &tempF, bool farenheight){
   //Reading humiditiy
   humi = Internal_dht22.readHumidity();
 
-  //READING TEMPERATURE IN CELCUIS
-  //tempF= Internal_dht22.readTemperature(true);
+ 
 
-  //READING TEMPERATURE IN FARENHEIGHT
-  //reading temperature as farenhieght by passing in true if needed in celcius un comment line above
-  tempF= Internal_dht22.readTemperature(true);
+  if(farenheight){
+    //READING TEMPERATURE IN FARENHEIGHT
+    //reading temperature as farenhieght by passing in true if needed in celcius un comment line above
+    tempF= Internal_dht22.readTemperature(true);
+  }
+  else{
+    //READING TEMPERATURE IN CELCUIS
+    tempF= Internal_dht22.readTemperature(false);
+  }
 
   //Checking to see if the reads fail only unccoment when debugging a DHT22 sensor
   // if (isnan(humi) || isnan(tempF)){

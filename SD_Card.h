@@ -17,7 +17,7 @@
   CS - pin 17 */
 
 //A function to setup the SD card module
-void SD_setup();
+void SD_setup(bool farenheight);
 
 //A function to log all the data onto the SD card in a CSV file format
 void data_Log(float E_humidity, float E_temperature, float I_humidity, float I_temperature, float irradianceint, int fan_Speed, int servo_Value, float internal_TargetTemp);

@@ -18,10 +18,10 @@ LCD SCREEN PINS
 void LCDStart();
 
 // A function that updates the display with the latest values
-void UpdateLCDValues(float speed, float angle, float t1, float t2, float Rh1, float Rh2, float Irr);
+void UpdateLCDValues(float speed, float angle, float t1, float t2, float Rh1, float Rh2, float Irr, int EMC_internval_in, int data_log_in);
 
 // runs the Intro date set windows
-void Intro_Set(int set_selector, int year, int month, int day, int hour, int minute);
+void Intro_Set(int set_selector, int year, int month, int day, int hour, int minute, int farenheight_value);
 
 // Automatic GUI
 void automaticGUI();
@@ -29,8 +29,14 @@ void automaticGUI();
 // Manual GUI
 void manualGUI();
 
-// Displays actuators (not directly called)
-void displayFan_Orifice(int fan, int orifice);
+//Adjust Parameters GUI
+void adjustParametersGUI();
+
+//Displays EMC and Datalog time (not called by main)
+void display_EMC_dLog_Time();
+
+// Displays actuators (not called by main)
+void displayFan_Orifice();
 
 // Function to clear only the necessary parts of the screen
 void clearPage();
